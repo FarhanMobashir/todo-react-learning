@@ -4,7 +4,6 @@ export const TODO_DONE = "TODO_DONE";
 
 export const reducer = (state = [], action) => {
   if (action.type === TODO_ADD) {
-    console.log(action.payload);
     return [action.payload, ...state];
   }
 
