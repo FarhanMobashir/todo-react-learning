@@ -1,29 +1,50 @@
 import NewTodo from "./NewTodo";
 import TodoItems from "./TodoItems";
 import initialData from "./initialData";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useCallback, useReducer } from "react";
+import { v4 as id } from "uuid";
+import { reducer, TODO_ADD, TODO_DELETE, TODO_DONE } from "./reducers";
 
 function App() {
-  const [todos, setTodos] = useState(initialData);
-  const addTodo = (todo) => {
-    todo.id = uuidv4();
-    todo.isDone = false;
-    setTodos([todo, ...todos]);
-  };
+  const [todos, dispatch] = useReducer(reducer, initialData);
+  const addTodo = useCallback(
+    ({ title, description }) => {
+      dispatch({
+        type: TODO_ADD,
+        payload: {
+          title,
+          description,
+          isDone: false,
+          id: id(),
+        },
+      });
+    },
+    [dispatch]
+  );
 
-  const toggleDone = (id) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id !== id) return todo;
-        return { ...todo, isDone: !todo.isDone };
-      })
-    );
-  };
+  const toggleDone = useCallback(
+    (id) => {
+      dispatch({
+        type: TODO_DONE,
+        payload: {
+          id,
+        },
+      });
+    },
+    [dispatch]
+  );
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+  const deleteTodo = useCallback(
+    (id) => {
+      dispatch({
+        type: TODO_DELETE,
+        payload: {
+          id,
+        },
+      });
+    },
+    [dispatch]
+  );
 
   return (
     <div className="app">

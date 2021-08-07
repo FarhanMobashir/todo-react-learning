@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const NewTodo = ({ onSubmit }) => {
+const NewTodo = React.memo(({ onSubmit }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errorText, setErrorText] = useState("");
@@ -42,6 +42,6 @@ const NewTodo = ({ onSubmit }) => {
       </form>
     </div>
   );
-};
+});
 
 export default NewTodo;
