@@ -3,17 +3,14 @@ import React, { useState } from "react";
 const NewTodo = ({ onSubmit }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [errorText, setErrorText] = useState("");
   const handleChange = (event) => {
     if (title === "" || description === "") {
-      setErrorText("Please fill both fields");
       return;
     } else {
       event.preventDefault();
       onSubmit({ title, description });
       setTitle("");
       setDescription("");
-      setErrorText("");
     }
   };
   return (
@@ -38,7 +35,6 @@ const NewTodo = ({ onSubmit }) => {
         <div className="form-element-cotainer">
           <input type="submit" value="Add todo" className="add-todo" />
         </div>
-        <p>{errorText}</p>
       </form>
     </div>
   );
