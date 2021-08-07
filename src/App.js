@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import NewTodo from "./NewTodo";
+import TodoItems from "./TodoItems";
+import initialData from "./initialData";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
+  const [todos, setTodos] = useState(initialData);
+  const addTodo = (todo) => {
+    todo.id = uuidv4();
+    todo.isDone = false;
+    setTodos([todo, ...todos]);
+  };
+
+  const toggleDone = (id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id !== id) return todo;
+        return { ...todo, isDone: !todo.isDone };
+      })
+    );
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1 className="heading">Todo List</h1>
+      <NewTodo onSubmit={addTodo} />
+      <TodoItems todos={todos} onDone={toggleDone} onDelete={deleteTodo} />
     </div>
   );
 }
