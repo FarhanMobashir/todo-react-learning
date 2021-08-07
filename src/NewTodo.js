@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { TodoContext } from "./TodoContext";
 
-const NewTodo = React.memo(({ onSubmit }) => {
+const NewTodo = React.memo(() => {
+  const { addTodo } = useContext(TodoContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errorText, setErrorText] = useState("");
@@ -10,7 +12,7 @@ const NewTodo = React.memo(({ onSubmit }) => {
       return;
     } else {
       event.preventDefault();
-      onSubmit({ title, description });
+      addTodo({ title, description });
       setTitle("");
       setDescription("");
       setErrorText("");
