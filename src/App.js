@@ -1,11 +1,30 @@
 import NewTodo from "./NewTodo";
 import TodoItems from "./TodoItems";
 import initialData from "./initialData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+const getStateFromLocalStorage = () => {
+  const storage = localStorage.getItem("todos");
+  // console.log(storage);
+  if (storage) {
+    return JSON.parse(storage).todos;
+  } else {
+    return initialData;
+  }
+};
+
+const storeStateInLocalStorage = (todos) => {
+  localStorage.setItem("todos", JSON.stringify({ todos }));
+  // console.log(localStorage);
+};
+
 function App() {
-  const [todos, setTodos] = useState(initialData);
+  const [todos, setTodos] = useState(getStateFromLocalStorage());
+  useEffect(() => {
+    storeStateInLocalStorage(todos);
+  }, [todos]);
+
   const addTodo = (todo) => {
     todo.id = uuidv4();
     todo.isDone = false;
