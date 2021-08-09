@@ -1,18 +1,18 @@
-import React, { useContext, useState } from "react";
-import { TodoContext } from "./TodoContext";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./action";
 
 const NewTodo = React.memo(() => {
-  const { addTodo } = useContext(TodoContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errorText, setErrorText] = useState("");
+  const dispatch = useDispatch();
   const handleChange = (event) => {
     if (title === "" || description === "") {
       setErrorText("Please fill both fields");
-      return;
     } else {
       event.preventDefault();
-      addTodo({ title, description });
+      dispatch(addTodo({ title, description }));
       setTitle("");
       setDescription("");
       setErrorText("");

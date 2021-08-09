@@ -1,13 +1,12 @@
-export const TODO_ADD = "TODO_ADD";
-export const TODO_DELETE = "TODO_DELETE";
-export const TODO_DONE = "TODO_DONE";
+import { ADD_TODO, DELETE_TODO, TODO_DONE } from "./action";
+import initialData from "./initialData";
 
-export const reducer = (state = [], action) => {
-  if (action.type === TODO_ADD) {
+export const reducer = (state = initialData, action) => {
+  if (action.type === ADD_TODO) {
     return [action.payload, ...state];
   }
 
-  if (action.type === TODO_DELETE) {
+  if (action.type === DELETE_TODO) {
     return state.filter((item) => item.id !== action.payload.id);
   }
 

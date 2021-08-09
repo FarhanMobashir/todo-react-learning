@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import { TodoContext } from "./TodoContext";
+import React from "react";
 import TodoItem from "./TodoItem";
 
-const TodoItems = () => {
-  const { todos } = useContext(TodoContext);
+const TodoItems = ({ todos }) => {
   console.log(todos);
   return (
     <div className="todos">
